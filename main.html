@@ -1,0 +1,46 @@
+     <!DOCTYPE html>
+     <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>Status</title>
+         <style>
+             :root {
+                 --glow-color: #00ff00;
+             }
+             body {
+                 margin: 0;
+                 height: 100vh;
+                 display: flex;
+                 justify-content: center;
+                 align-items: center;
+                 font-size: 10em;
+                 font-family: 'Courier New', Courier, monospace;
+                 position: relative;
+                 overflow: hidden;
+                 background-color: black;
+                 user-select: none;
+             }
+             .text {
+                 position: absolute;
+                 color: var(--glow-color);
+                 text-shadow: 0 0 20px var(--glow-color), 0 0 30px var(--glow-color);
+                 animation: textBlink 1s infinite alternate;
+             }
+         </style>
+     </head>
+     <body>
+         <div class="text">fl0043R</div>
+         <div style="color: white; font-size: 22px; transform: translateY(400%);">is currently:</div><br>
+         <div id="status" style="color: red; font-size: 22px; transform: translateY(400%);">offline</div>
+         <script>
+             fetch('status.json')
+                 .then(response => response.json())
+                 .then(data => {
+                     document.getElementById('status').innerText = data.status === 'online' ? 'online' : 'offline';
+                     document.getElementById('status').style.color = data.status === 'online' ? 'green' : 'red';
+                 })
+                 .catch(error => console.error('Error fetching status:', error));
+         </script>
+     </body>
+     </html>
